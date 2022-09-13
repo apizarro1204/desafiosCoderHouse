@@ -1,7 +1,7 @@
 const express = require("express"),
 app = express(),
 PORT = process.env.PORT || 8080,
-routes = require("./routes");
+routes = require("./routes/index.js");
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/api/productos', routes);
 
 // Public
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
 })
 

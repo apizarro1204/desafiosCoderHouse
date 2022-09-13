@@ -37,10 +37,16 @@ class Contenedor {
         try {
             const contenido = await this.getAll();
             const productoBuscado = contenido.filter((producto) => producto.id == id);
-            console.log(productoBuscado);
-            return productoBuscado;
+            if(productoBuscado != 0){
+                return productoBuscado;
+            }else{
+            //console.log(productoBuscado);
+                console.log("Producto no encontrado");
+                return null;
+            }
         } catch (err) {
             console.log("Producto no encontrado", err);
+            return err;
         }
     }
 
