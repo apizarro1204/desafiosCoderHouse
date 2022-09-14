@@ -22,8 +22,24 @@ router.get('/:id', async (req, res) => {
 //POST api/productos
 router.post('/', async (req, res) => {
     const {title, price, thumbnail} = req.body;
-    const id = await contenedor.save({title, price, thumbnail});
+    const id = await contenedor.post({title, price, thumbnail});
     res.send({message: `Producto agregado con el id: ${id}`});
+})
+
+// PUT api/productos/:id
+router.put('/:id', async (req,res) =>{
+    const {title, price, thumbnail} = req.body;
+    const id = await contenedor.put(Number(req.params.id),
+    {title, price, thumbnail});
+    res.json(id)
+})
+
+// DELETE api/productos/:id
+router.delete('/:id', async (req,res) =>{
+    const borrar = await contenedor.deleteById(Number(req.params.id));
+    res.json(
+        borrar !== null ? {message: `Se elimnó el producto con id: ${borrar}`} : {error: "Producto no encontrado"}
+    )
 })
 
 

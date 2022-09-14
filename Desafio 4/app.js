@@ -1,7 +1,7 @@
 const express = require("express"),
 app = express(),
 PORT = process.env.PORT || 8080,
-routes = require("./routes/index.js");
+routes = require("./routes/");
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -17,5 +17,3 @@ app.get('/api', (req, res) => {
 // Server
 app.listen(PORT, () => { console.log(`servidor iniciado ${PORT}`);
 });
-
-
