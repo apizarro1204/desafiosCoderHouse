@@ -1,0 +1,2 @@
+Mi preferencia a la hora de crear motores de plantillas es EJS.
+El uso de EJS, a pesar de ser un poco más tedioso, es más fácil de manejar y entender. Entrega más facilidades a la hora de usar Javascript y la sintaxtis de HTML no se ve modificada por completo, a diferencia de PUG. 

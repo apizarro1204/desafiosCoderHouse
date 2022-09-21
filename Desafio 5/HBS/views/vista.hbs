@@ -25,6 +25,8 @@
                     <tr> <td>{{this.title}}</td> <td>${{this.price}}</td> <td><img width="50" src={{this.thumbnail}} alt="not found"></td> </tr>
                 {{/each}}
             </table>
+                        <button onclick="window.open('/', '_blank')" class="btn btn-info">Ingresar productos</button>
+
         </div>
     {{else}}  
         <h3 class="alert alert-warning">No se encontraron productos</h3>
