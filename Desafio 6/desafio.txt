@@ -1,0 +1,8 @@
+Se muestra el form para  ingresar productos
+Se muestra el chat básico funcionando
+
+--------
+
+Hay que agregar la lista de productos.
+Hay que definir el correo y las otras cosas que pide para el chat y mejorar la visibilidad
+
