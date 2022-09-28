@@ -2,6 +2,7 @@ class Contenedor {
     constructor() {
         this.itemList = [];
 		this.id = 0;
+        
 
     }
 
