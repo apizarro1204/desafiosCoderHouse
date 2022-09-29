@@ -64,21 +64,11 @@ app.use(express.static("public")); //quiza views?
 
 app.use("/", router);
 
-app.get("/", (req, res) =>{
-	res.sendFile("index.html")
-})
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-// router.get("/", (req, res) => {
-// 	const prods = productos.getAll();
 
-// 	res.render("layouts/index", {
-// 		productos: prods,
-// 		hayProductos: prods.length,
-// 	});
-// });
 
 router.post("/", (req, res) => {
 	const producto = req.body;
@@ -91,7 +81,3 @@ router.post("/", (req, res) => {
 
 httpServer.listen(PORT, () => console.log("servidor Levantado"));
 
-// const server = app.listen(PORT, () => {
-// 	console.log(`Servidor http escuchando en el puerto ${server.address().port}`);
-// });
-// server.on("error", (error) => console.log(`Error en servidor ${error}`));

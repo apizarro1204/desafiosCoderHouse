@@ -41,7 +41,7 @@ function addMessage(e) {
 
 function renderItem(data) {
     const html = data.map((elemento) => {
-        let modelo = `<tr class="table-light">
+        let modelo = `<tr class="table-dark">
                         <td>${elemento.id}</td>
                         <td>${elemento.title}</td>
                         <td>${elemento.price}</td>
