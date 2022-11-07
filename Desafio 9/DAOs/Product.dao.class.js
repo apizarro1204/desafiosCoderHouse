@@ -1,13 +1,12 @@
 const mongoose = require("mongoose");
-const productModel = require("../models/productsModel");
+const ProductModel = require("../models/productsModel");
 
 
 class Product {
 	constructor() {
-		this.url = "mongodb+srv://Apizarro:darbeta12@cluster0.ho8uwm4.mongodb.net/?retryWrites=true&w=majority"
-		//this.url = "mongodb://localhost:27017/";
+		//this.url = "mongodb+srv://Apizarro:darbeta12@cluster0.ho8uwm4.mongodb.net/?retryWrites=true&w=majority"
+		this.url = "mongodb://localhost:27017/";
 		this.mongodb = mongoose.connect;
-		this.mongodb(this.url);
 	}
 
 	// Crear Archivo con el producto
@@ -27,7 +26,7 @@ class Product {
 		try {
 			await this.mongodb(this.url)
 			const newProduct = await this.save(
-				new productModel({
+				new ProductModel({
                 title: prod.title,
                 price: prod.price,
                 thumbnail: prod.thumbnail

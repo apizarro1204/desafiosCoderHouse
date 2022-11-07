@@ -18,37 +18,35 @@ const io = new IOServer(httpServer);
 const PORT = 8080;
 
 const prod = new ProductDao();
+const msg = new MessageDao();
 
 // Conectamos websocket
 io.on("connection", async (socket) => {
     console.log('Usuario con id: ', socket.id, ' se ha conectado')
 
     let productos = await prod.getAll();
-    //let mensajes = await msg.getAll();
+    let mensajes = await msg.normalize();
     // Socket Chat
-//     socket.emit('messages', mensajes);
+    socket.emit('messages', mensajes);
 
-//     // Mensajes mostrados correctamente.
-// 	socket.on("new-message", async (data) => {
-// 		data.date = new Date().toLocaleDateString()
-// 		mensajes.push(data);
-//         msg.addMessage(data);
+    // Mensajes mostrados correctamente.
+    socket.on("new-message", async (data) => {
+        await msg.createData(data);
+        console.log(data)
 
-//         console.log(data)
-		
-// 		io.sockets.emit("messages", mensajes);
-// });
+        io.sockets.emit("messages", mensajes);
+    });
 
     // Socket productos
     socket.emit("productList", productos);
 
 
-	socket.on("newProduct", async (data) => {
-        await prod.createData(data);       
+    socket.on("newProduct", async (data) => {
+        await prod.createData(data);
 
-		io.sockets.emit("productList", productos)
-	})
-    socket.on("randomProduct",async(data) =>{
+        io.sockets.emit("productList", productos)
+    })
+    socket.on("randomProduct", async (data) => {
         await prod.createData(data);
 
         io.sockets.emit("productList", productos)
@@ -69,13 +67,13 @@ app.set("socketio", io);
 
 
 app.use("/", router);
-app.use("/api/productos-test", prodRouter );
+app.use("/api/productos-test", prodRouter);
 
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.get("/api/productos-test", (req,res)=>{
+router.get("/api/productos-test", (req, res) => {
     let response = [];
     for (let index = 0; index <= 5; index++) {
         response.push({
@@ -85,13 +83,13 @@ router.get("/api/productos-test", (req,res)=>{
         });
     }
 
-    res.render('test.ejs', {response: response})
+    res.render('test.ejs', { response: response })
 })
 router.post("/", (req, res) => {
-	const producto = req.body;
-	prod.createData(producto);
+    const producto = req.body;
+    prod.createData(producto);
     console.log(`Router ${producto}`);
-	res.redirect("/");
+    res.redirect("/");
 });
 
 prodRouter.post("/", async (req, res) => {

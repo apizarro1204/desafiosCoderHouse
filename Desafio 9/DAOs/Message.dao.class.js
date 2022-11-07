@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
 const messageModel = require("../models/messageModel");
+const { normalize, schema } = require("normalizr");
+const util = require("util");
 
 class Message {
     constructor() {
-        this.url = "mongodb+srv://Apizarro:darbeta12@cluster0.ho8uwm4.mongodb.net/?retryWrites=true&w=majority"
-        //this.url = "mongodb://localhost:27017/";
+        // this.url = "mongodb+srv://Apizarro:darbeta12@cluster0.ho8uwm4.mongodb.net/?retryWrites=true&w=majority"
+        this.url = "mongodb://localhost:27017/";
         this.mongodb = mongoose.connect;
-        this.mongodb(this.url);
     }
 
     async save(msg) {
@@ -25,7 +26,7 @@ class Message {
             const newMessage = await this.save(
                 new messageModel({
                     author: {
-                        id: msg.email,
+                        email: msg.email,
                         nombre: msg.nombre,
                         apellido: msg.apellido,
                         edad: msg.edad,
@@ -37,17 +38,35 @@ class Message {
             );
             return newMessage;
 
-        }catch(err){
+        } catch (err) {
             return err;
         }
     }
 
-    async getAll(){
-        try{
+    async getAll() {
+        try {
             await this.mongodb(this.url);
             return await messageModel.find();
-        }catch(err){
+
+        } catch (err) {
             return err;
         }
     }
+
+    async normalize(){
+        let messages = {messages: await this.getAll()};
+        const authorSchema = new schema.Entity(
+            "authors", {}, { idAttribute: "email" }
+        );
+        const messageSchema = new schema.Entity("message",{author: authorSchema});
+        const msgSchema = { messages: [messageSchema]};
+        const normalizado = normalize(messages, msgSchema);
+
+        console.log(normalizado);
+
+        return normalizado;
+
+    }
 }
+
+module.exports = Message;
