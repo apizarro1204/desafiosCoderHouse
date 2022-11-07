@@ -61,3 +61,9 @@ async function test(){
 }
 
 test();
+
+//usuario.crearArchivo(archivo);
+//usuario.save(productoNuevo);
+//usuario.getById(3);
+//usuario.deleteById(3);
+//usuario.deleteAll();

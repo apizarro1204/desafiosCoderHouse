@@ -1,8 +1,8 @@
 const handlebars = require("express-handlebars");
 const express = require("express");
-const Contenedor = require("./api/productos.js");
+const Productos = require("./api/productos.js");
 
-let productos = new Contenedor();
+let productos = new Productos();
 
 const app = express();
 
@@ -27,34 +27,37 @@ app.use("/api", router);
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.get("/productos/listar/:id", async (req, res) => {
-	const id = Number(req.params.id);
-	const cont = await productos.getById(id);
-	cont == null ? res.json({ error: "producto no encontrado" }) : res.json(cont);
+router.get("/productos/listar", (req, res) => {
+	res.json(productos.listarAll());
+});
+
+router.get("/productos/listar/:id", (req, res) => {
+	let { id } = req.params;
+	res.json(productos.listar(id));
 });
 
 router.post("/productos/guardar", (req, res) => {
-	const producto = req.body;
-	productos.post(producto);
+	let producto = req.body;
+	productos.guardar(producto);
+	//res.json(producto)
 	res.redirect("/");
 });
 
-router.put("/productos/actualizar/:id", async (req, res) => {
-	const { title, price, thumbnail } = req.body;
-	const id = await productos.put(Number(req.params.id),
-		{ title, price, thumbnail });
-	res.json(id)
+router.put("/productos/actualizar/:id", (req, res) => {
+	let { id } = req.params;
+	let producto = req.body;
+	productos.actualizar(producto, id);
+	res.json(producto);
 });
 
-router.delete("/productos/borrar/:id", async (req, res) => {
-	const borrar = await productos.deleteById(Number(req.params.id));
-	res.json(
-		borrar !== null ? { message: `Se elimnó el producto con id: ${borrar}` } : { error: "Producto no encontrado" }
-	)
+router.delete("/productos/borrar/:id", (req, res) => {
+	let { id } = req.params;
+	let producto = productos.borrar(id);
+	res.json(producto);
 });
 
 router.get("/productos/vista", (req, res) => {
-	let prods = productos.getAll();
+	let prods = productos.listarAll();
 
 	res.render("vista", {
 		productos: prods,

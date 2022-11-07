@@ -1,0 +1,17 @@
+<% if(personas.length !== 0) { %>
+    <div class="table-responsive">
+        <table class="table table-dark">
+            <tr style="color: yellow;"> <th>Nombre</th> <th>Apellido</th> <th>Edad</th> </tr>
+           <% for (const persona in personas ) { %>
+            <tr>
+                <td> <%= personas[persona].nombre %> </td>
+                <td> <%= personas[persona].apellido %> </td>
+                <td> <%= personas[persona].edad %></td>
+            </tr>
+            <% } %>
+        </table>
+    </div>
+<% } else{ %> 
+   <h3 style="color: black">no existen datos</h3>
+<% }%>
+

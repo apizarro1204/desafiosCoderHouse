@@ -57,7 +57,6 @@ async function test(){
     } catch(err){
         console.log("Sucedió un error", err);
     }
-
 }
 
 test();

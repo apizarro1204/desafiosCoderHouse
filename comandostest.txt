@@ -1,0 +1,31 @@
+use nombreBaseDeDatos // Crea una base de datos / use empresas
+show dbs // Muestra todas las bases de datos
+db.createCollection("nombre") // Crea la colección
+show collections // muestra todas las colecciones
+db."coleccion".find() // Entrega toda la colección
+db.coleccion.insertOne() // Inserta un dato a la base de datos.
+db.coleccion.insertMany() // Inserta varios. Si están en formato JSON hay que ponerle los [] para que sea un arreglo
+db.coleccion.estimatedDocumentCount() // Muestra la cantidad de documentos que tiene la coleccion
+db.coleccion.countDocuments({clave y valor}) // Entrega la cantidad de veces que se repite el dato por la clave y valor filtrado
+
+db.coleccion.find().sort({}) // Para ordenar por la clave. -1 para orden desendente y 1 para ascendente
+db.coleccion.find().sort({}).limit() // Por si quieremos encontrar un valor en específico, sobre todo si es el menor o mayor. limit entrega la cantidad de valores encontramos que nosotros deseemos
+EJ limit(): db.clientes.find().sort({edad:1}).limit(1) // Acá solo nos entrega el primer resultado con el menor valor de edad
+
+db.coleccion.find().sort({}).limit().skip() // Lo mismo de arriba pero se salta la cantidad de valores que pongamos
+$and sirve para encontrar un dato con 2 condiciones de búsqueda.
+db.coleccion.find({$and: [{clave: clave}, {clave2:}]})
+
+$or sirve para encontrar datos con las condiciones de busqueda.
+db.coleccion.find({$or: {clave: clave}, {clave2:}]}) // Trae todos los datos que cumplan una de las dos condiciones
+
+$gt 
+
+
+$ use admin
+$ db.createUser(
+  {
+    user: "superAdmin",
+    pwd: "pass1234",
+    roles: [ { role: "root", db: "admin" } ]
+  })
